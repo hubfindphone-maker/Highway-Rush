@@ -1,0 +1,3974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Highway Rush</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#070a0e;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+  touch-action:manipulation;
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:12px 16px;
+  color:#fff;
+  background:#202b38;
+  font-weight:800;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.96);
+}
+
+.hidden{
+  display:none!important;
+}
+
+/* LOGIN */
+
+#loginScreen{
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 50% 20%,#194e75,#090e14 55%,#030507);
+  z-index:100;
+}
+
+.loginCard{
+  width:min(420px,94vw);
+  padding:28px 22px;
+  text-align:center;
+  background:rgba(10,15,22,.96);
+  border:1px solid #344554;
+  border-radius:24px;
+  box-shadow:0 20px 70px #000;
+}
+
+.logo{
+  font-size:37px;
+  font-weight:1000;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:#19baff;
+}
+
+.subtitle{
+  color:#9caab8;
+  margin:7px 0 24px;
+}
+
+.loginInput{
+  width:100%;
+  padding:14px;
+  margin:5px 0;
+  border:1px solid #354555;
+  border-radius:11px;
+  outline:none;
+  background:#111923;
+  color:#fff;
+}
+
+.loginBtn{
+  width:100%;
+  margin-top:9px;
+  background:#108ed8;
+}
+
+.demo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:9px;
+}
+
+.demo button:first-child{
+  background:#252525;
+}
+
+.demo button:last-child{
+  background:#29418d;
+}
+
+.note{
+  margin-top:14px;
+  color:#74818d;
+  font-size:11px;
+}
+
+
+/* APP */
+
+#app{
+  position:fixed;
+  inset:0;
+  background:#080b10;
+}
+
+.topbar{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 12px;
+  background:#0c1219;
+  border-bottom:1px solid #293641;
+  position:relative;
+  z-index:10;
+}
+
+.brand{
+  font-weight:1000;
+  font-size:19px;
+}
+
+.brand span{
+  color:#16b9ff;
+}
+
+.money{
+  color:#ffd54a;
+  font-weight:900;
+  margin-left:auto;
+  margin-right:8px;
+}
+
+.nav{
+  display:flex;
+  gap:5px;
+}
+
+.nav button{
+  padding:8px 9px;
+  font-size:11px;
+}
+
+.main{
+  height:calc(100% - 64px);
+  overflow:auto;
+  padding:14px;
+}
+
+
+/* HOME */
+
+.homeGrid{
+  max-width:900px;
+  margin:auto;
+  display:grid;
+  gap:14px;
+}
+
+.hero{
+  min-height:230px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:25px;
+  border:1px solid #2b3d4d;
+  border-radius:22px;
+  background:
+    linear-gradient(135deg,#132333,#080d13);
+}
+
+.hero h1{
+  margin:0;
+  font-size:36px;
+}
+
+.hero p{
+  color:#9ba8b5;
+  line-height:1.5;
+}
+
+.bigPlay{
+  width:100%;
+  margin-top:10px;
+  padding:17px;
+  font-size:18px;
+  background:linear-gradient(135deg,#00a9ff,#0065c5);
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.infoCard{
+  padding:15px;
+  border:1px solid #293743;
+  border-radius:15px;
+  background:#111821;
+}
+
+.infoCard small{
+  color:#8593a1;
+}
+
+.infoCard b{
+  display:block;
+  margin-top:5px;
+  font-size:20px;
+}
+
+
+/* PANELS */
+
+.panel{
+  max-width:900px;
+  margin:auto;
+}
+
+.panelTitle{
+  font-size:26px;
+  font-weight:900;
+  margin:5px 0 15px;
+}
+
+
+/* GARAGE */
+
+.carGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.carCard{
+  padding:13px;
+  background:#111821;
+  border:1px solid #2a3946;
+  border-radius:17px;
+}
+
+.carVisual{
+  height:105px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  margin-bottom:10px;
+  background:linear-gradient(#1a2530,#0c1117);
+}
+
+.carEmoji{
+  font-size:63px;
+  filter:drop-shadow(0 8px 5px #000);
+}
+
+.carName{
+  font-weight:900;
+}
+
+.stats{
+  display:flex;
+  justify-content:space-between;
+  margin:7px 0;
+  color:#94a1ad;
+  font-size:12px;
+}
+
+.carBtn{
+  width:100%;
+}
+
+.selected{
+  background:#0b7653;
+}
+
+
+/* SETTINGS */
+
+.settingsBox{
+  padding:18px;
+  margin-bottom:12px;
+  border-radius:18px;
+  background:#111821;
+  border:1px solid #293743;
+}
+
+.settingsBox h3{
+  margin-top:0;
+}
+
+.settingRow{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0;
+  border-bottom:1px solid #26323d;
+}
+
+.settingRow:last-child{
+  border-bottom:0;
+}
+
+
+/* PROFILE */
+
+.profileCard{
+  padding:30px;
+  text-align:center;
+  border-radius:22px;
+  background:#111821;
+  border:1px solid #293743;
+}
+
+.avatar{
+  width:85px;
+  height:85px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:#176e9f;
+  font-size:40px;
+}
+
+
+/* LEADERBOARD */
+
+.leaderRow{
+  display:flex;
+  justify-content:space-between;
+  padding:14px;
+  margin-bottom:8px;
+  border-radius:13px;
+  background:#111821;
+  border:1px solid #293743;
+}
+
+.rank{
+  color:#ffd34d;
+  font-weight:1000;
+}
+
+
+/* GAME */
+
+#gameScreen{
+  position:fixed;
+  inset:0;
+  background:#000;
+  z-index:50;
+}
+
+#gameCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.hud{
+  position:absolute;
+  top:10px;
+  left:8px;
+  right:8px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:5px;
+  z-index:4;
+  pointer-events:none;
+}
+
+.hudBox{
+  padding:7px 3px;
+  text-align:center;
+  font-size:9px;
+  font-weight:800;
+  border-radius:9px;
+  background:rgba(4,8,12,.75);
+  border:1px solid rgba(255,255,255,.15);
+}
+
+.hudBox b{
+  display:block;
+  margin-top:2px;
+  font-size:12px;
+}
+
+#seasonHUD{
+  color:#70d5ff;
+}
+
+#multiHUD{
+  color:#ffd448;
+}
+
+.exitGame{
+  position:absolute;
+  top:74px;
+  left:9px;
+  z-index:5;
+  padding:8px 12px;
+  background:rgba(0,0,0,.65);
+}
+
+.controls{
+  position:absolute;
+  bottom:20px;
+  left:0;
+  right:0;
+  display:flex;
+  justify-content:space-between;
+  padding:0 24px;
+  z-index:5;
+  pointer-events:none;
+}
+
+.controlBtn{
+  width:85px;
+  height:68px;
+  font-size:28px;
+  border-radius:20px;
+  background:rgba(255,255,255,.13);
+  border:1px solid rgba(255,255,255,.3);
+  pointer-events:auto;
+  user-select:none;
+  touch-action:none;
+}
+
+.seasonBanner{
+  position:absolute;
+  top:43%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(.75);
+  opacity:0;
+  padding:18px 28px;
+  text-align:center;
+  border-radius:18px;
+  background:rgba(4,8,12,.93);
+  border:1px solid rgba(255,255,255,.25);
+  box-shadow:0 15px 50px #000;
+  transition:.3s;
+  z-index:8;
+  pointer-events:none;
+}
+
+.seasonBanner.show{
+  opacity:1;
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.seasonBanner b{
+  font-size:25px;
+}
+
+.seasonBanner small{
+  display:block;
+  margin-top:5px;
+  color:#9aa7b4;
+}
+
+
+/* CRASH */
+
+#crashScreen{
+  position:absolute;
+  inset:0;
+  z-index:20;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.72);
+}
+
+.crashCard{
+  width:min(360px,90vw);
+  padding:25px;
+  text-align:center;
+  border-radius:22px;
+  background:#10161e;
+  border:1px solid #3a4856;
+}
+
+.crashCard h1{
+  color:#ff4141;
+  font-size:36px;
+}
+
+.crashCard button{
+  width:100%;
+  margin-top:8px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  .topbar{
+    height:58px;
+    padding:0 7px;
+  }
+
+  .main{
+    height:calc(100% - 58px);
+  }
+
+  .brand{
+    font-size:13px;
+  }
+
+  .money{
+    font-size:12px;
+  }
+
+  .nav{
+    gap:2px;
+  }
+
+  .nav button{
+    padding:7px 5px;
+    font-size:8px;
+  }
+
+  .cards{
+    grid-template-columns:1fr;
+  }
+
+  .carGrid{
+    grid-template-columns:1fr;
+  }
+
+  .hud{
+    gap:3px;
+    left:4px;
+    right:4px;
+  }
+
+  .hudBox{
+    font-size:8px;
+    padding:6px 2px;
+  }
+
+  .hudBox b{
+    font-size:10px;
+  }
+
+  .controlBtn{
+    width:75px;
+    height:62px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<section id="loginScreen">
+
+<div class="loginCard">
+
+  <div class="logo">
+    HIGHWAY <span>RUSH</span>
+  </div>
+
+  <div class="subtitle">
+    Drive. Survive. Upgrade.
+  </div>
+
+  <input
+    id="emailInput"
+    class="loginInput"
+    type="email"
+    placeholder="Email"
+    autocomplete="email">
+
+  <input
+    id="nameInput"
+    class="loginInput"
+    type="text"
+    placeholder="Player name"
+    autocomplete="name">
+
+  <button
+    class="loginBtn"
+    onclick="loginNormal()">
+    LOGIN
+  </button>
+
+  <div class="demo">
+
+    <button onclick="loginWithGoogle()">
+      Google
+    </button>
+
+    <button onclick="loginWithFacebook()">
+      Facebook
+    </button>
+
+  </div>
+
+  <button
+    style="width:100%;margin-top:9px"
+    onclick="guestLogin()">
+    Continue as Guest
+  </button>
+
+  <div class="note">
+    Demo login only. No passwords are collected.
+  </div>
+
+</div>
+
+</section>
+
+
+<!-- APP -->
+<section id="app" class="hidden">
+
+<header class="topbar">
+
+  <div class="brand">
+    HIGHWAY <span>RUSH</span>
+  </div>
+
+  <div class="money">
+    💰 <span id="moneyTop">0</span>
+  </div>
+
+  <nav class="nav">
+
+    <button onclick="showPanel('home')">Home</button>
+    <button onclick="showPanel('garage')">Garage</button>
+    <button onclick="showPanel('leaderboard')">Ranks</button>
+    <button onclick="showPanel('profile')">Profile</button>
+    <button onclick="showPanel('settings')">Settings</button>
+
+  </nav>
+
+</header>
+
+
+<main class="main">
+
+<section id="homePanel">
+
+<div class="homeGrid">
+
+  <div class="hero">
+
+    <h1>HIGHWAY RUSH</h1>
+
+    <p>
+      Drive through changing seasons,
+      avoid traffic, earn cash and unlock
+      faster cars.
+    </p>
+
+    <button
+      class="bigPlay"
+      onclick="startGame()">
+      🏁 START RACE
+    </button>
+
+  </div>
+
+  <div class="cards">
+
+    <div class="infoCard">
+      <small>STAGE</small>
+      <b id="homeStage">1</b>
+    </div>
+
+    <div class="infoCard">
+      <small>SEASON</small>
+      <b id="homeSeason">SPRING</b>
+    </div>
+
+    <div class="infoCard">
+      <small>MULTIPLIER</small>
+      <b id="homeMulti">×1</b>
+    </div>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<section id="garagePanel" class="panel hidden">
+
+  <div class="panelTitle">
+    🏎️ Garage
+  </div>
+
+  <div id="carGrid" class="carGrid"></div>
+
+</section>
+
+
+<section id="leaderboardPanel" class="panel hidden">
+
+  <div class="panelTitle">
+    🏆 Leaderboard
+  </div>
+
+  <div id="leaderboardList"></div>
+
+</section>
+
+
+<section id="profilePanel" class="panel hidden">
+
+  <div class="profileCard">
+
+    <div class="avatar">
+      🏎️
+    </div>
+
+    <h2 id="profileName">Player</h2>
+
+    <p id="profileEmail">Guest</p>
+
+    <p>
+      Highest Score:
+      <b id="profileScore">0</b>
+    </p>
+
+    <p>
+      Current Stage:
+      <b id="profileStage">1</b>
+    </p>
+
+    <p>
+      Current Car:
+      <b id="profileCar">Sport Red</b>
+    </p>
+
+    <button onclick="logout()">
+      Log Out
+    </button>
+
+  </div>
+
+</section>
+
+
+<section id="settingsPanel" class="panel hidden">
+
+  <div class="panelTitle">
+    ⚙️ Settings
+  </div>
+
+  <div class="settingsBox">
+
+    <h3>Audio</h3>
+
+    <div class="settingRow">
+
+      <span>Sound</span>
+
+      <button id="soundButton" onclick="toggleSound()">
+        ON
+      </button>
+
+    </div>
+
+    <div class="settingRow">
+
+      <span>Volume</span>
+
+      <button id="volumeButton" onclick="changeVolume()">
+        HIGH
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="settingsBox">
+
+    <h3>How to Play</h3>
+
+    <p>1. Press START RACE.</p>
+    <p>2. Move left and right to avoid traffic.</p>
+    <p>3. Your score increases while driving.</p>
+    <p>4. Faster cars give faster scoring.</p>
+    <p>5. Every 500 score points changes the season.</p>
+    <p>6. After Winter, Spring starts again.</p>
+    <p>7. Every 2,500 score points increases the Stage.</p>
+    <p>8. The multiplier increases every new Stage.</p>
+    <p>9. Use cash to unlock faster cars.</p>
+
+  </div>
+
+
+  <div class="settingsBox">
+
+    <h3>Controls</h3>
+
+    <p>📱 Mobile: Left / Right buttons.</p>
+    <p>⌨️ Keyboard: ← / →.</p>
+
+  </div>
+
+
+  <div class="settingsBox">
+
+    <h3>Developer</h3>
+
+    <p>
+      Developed by
+      <b>Aldrin F. Talledo</b>
+    </p>
+
+    <p>Highway Rush</p>
+
+  </div>
+
+</section>
+
+</main>
+
+</section>
+
+
+<!-- GAME -->
+<section id="gameScreen" class="hidden">
+
+<canvas id="gameCanvas"></canvas>
+
+<div class="hud">
+
+  <div class="hudBox">
+    STAGE
+    <b id="stageHUD">1</b>
+  </div>
+
+  <div class="hudBox">
+    SEASON
+    <b id="seasonHUD">SPRING</b>
+  </div>
+
+  <div class="hudBox">
+    MULTI
+    <b id="multiHUD">×1</b>
+  </div>
+
+  <div class="hudBox">
+    SCORE
+    <b id="scoreHUD">0</b>
+  </div>
+
+  <div class="hudBox">
+    SPEED
+    <b id="speedHUD">0</b>
+  </div>
+
+</div>
+
+<button
+  class="exitGame"
+  onclick="exitGame()">
+  ✕ Exit
+</button>
+
+
+<div id="seasonBanner" class="seasonBanner">
+
+  <b id="bannerSeason">SPRING</b>
+
+  <small id="bannerCycle">
+    Stage 1 • ×1
+  </small>
+
+</div>
+
+
+<div class="controls">
+
+  <button
+    class="controlBtn"
+    id="leftBtn">
+    ◀
+  </button>
+
+  <button
+    class="controlBtn"
+    id="rightBtn">
+    ▶
+  </button>
+
+</div>
+
+
+<div id="crashScreen">
+
+  <div class="crashCard">
+
+    <h1>CRASH!</h1>
+
+    <p>Your race has ended.</p>
+
+    <p>
+      Score:
+      <b id="crashScore">0</b>
+    </p>
+
+    <p>
+      Stage:
+      <b id="crashStage">1</b>
+    </p>
+
+    <button onclick="restartGame()">
+      🔄 Restart
+    </button>
+
+    <button onclick="exitGame()">
+      Exit
+    </button>
+
+  </div>
+
+</div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+const ADMIN_EMAIL = "hubfindphone@gmail.com";
+const ADMIN_CASH = 999999999999;
+const SAVE_KEY = "highwayRushFinalV5";
+
+
+const cars = [
+
+ {id:1,name:"Sport Red",price:0,color:"#d91f26",emoji:"🏎️",speed:1.00,handling:1.00,tail:"#ff4020"},
+ {id:2,name:"Street Blue",price:500,color:"#1768b1",emoji:"🚙",speed:1.02,handling:1.01,tail:"#38a8ff"},
+ {id:3,name:"Urban Black",price:900,color:"#17191c",emoji:"🚗",speed:1.04,handling:1.02,tail:"#ff3b22"},
+ {id:4,name:"Racer Yellow",price:1400,color:"#e6b800",emoji:"🏎️",speed:1.06,handling:1.04,tail:"#ffb300"},
+ {id:5,name:"Silver GT",price:2000,color:"#9ba4ab",emoji:"🚘",speed:1.08,handling:1.05,tail:"#ffffff"},
+ {id:6,name:"Green Sport",price:2700,color:"#16863d",emoji:"🚗",speed:1.10,handling:1.07,tail:"#45ff78"},
+ {id:7,name:"Orange RS",price:3500,color:"#e56c18",emoji:"🏎️",speed:1.12,handling:1.08,tail:"#ff6a00"},
+ {id:8,name:"Purple Turbo",price:4500,color:"#7437a8",emoji:"🚘",speed:1.14,handling:1.10,tail:"#d54cff"},
+ {id:9,name:"White GT",price:6000,color:"#e9edf0",emoji:"🏎️",speed:1.16,handling:1.12,tail:"#d9f4ff"},
+ {id:10,name:"Black Shadow",price:8000,color:"#08090a",emoji:"🚘",speed:1.18,handling:1.14,tail:"#ff2020"},
+ {id:11,name:"Blue X",price:10000,color:"#087fc5",emoji:"🏎️",speed:1.21,handling:1.17,tail:"#19bfff"},
+ {id:12,name:"Red Fury",price:12500,color:"#9d1219",emoji:"🚗",speed:1.24,handling:1.19,tail:"#ff1717"},
+ {id:13,name:"Gold Rush",price:15000,color:"#d4a72c",emoji:"🏎️",speed:1.27,handling:1.21,tail:"#ffd84a"},
+ {id:14,name:"Neon Green",price:18000,color:"#36c942",emoji:"🚘",speed:1.30,handling:1.24,tail:"#49ff65"},
+ {id:15,name:"Electric Blue",price:22000,color:"#18a9e8",emoji:"🏎️",speed:1.34,handling:1.27,tail:"#25dfff"},
+ {id:16,name:"Crimson",price:27000,color:"#720f18",emoji:"🚗",speed:1.38,handling:1.30,tail:"#ff1838"},
+ {id:17,name:"Titan",price:33000,color:"#52616b",emoji:"🚙",speed:1.42,handling:1.33,tail:"#c9e8ff"},
+ {id:18,name:"Phantom",price:40000,color:"#252a30",emoji:"🏎️",speed:1.46,handling:1.36,tail:"#a855ff"},
+ {id:19,name:"Super GT",price:50000,color:"#e8e8e8",emoji:"🏎️",speed:1.50,handling:1.40,tail:"#ffffff"},
+ {id:20,name:"Legend Hyper",price:70000,color:"#c900ff",emoji:"🏎️",speed:1.55,handling:1.45,tail:"#ff40ff"}
+
+];
+
+
+const seasons = [
+
+ {
+   name:"Spring",
+   sky:"#83c8ef",
+   ground:"#72a45c",
+   road:"#3a3d40",
+   line:"#fff"
+ },
+
+ {
+   name:"Summer",
+   sky:"#58b8ed",
+   ground:"#4e9848",
+   road:"#34373a",
+   line:"#fff"
+ },
+
+ {
+   name:"Autumn",
+   sky:"#d98b52",
+   ground:"#765a37",
+   road:"#3b3a39",
+   line:"#f4e6c8"
+ },
+
+ {
+   name:"Rainy Storm",
+   sky:"#4c5a68",
+   ground:"#3f4d45",
+   road:"#303438",
+   line:"#d5d9dc"
+ },
+
+ {
+   name:"Winter",
+   sky:"#b9d3e2",
+   ground:"#d9e2e7",
+   road:"#44474b",
+   line:"#fff"
+ }
+
+];
+
+
+/* =====================================================
+   SAVE SYSTEM
+===================================================== */
+
+let saveData = {
+  name:"Guest",
+  email:"",
+  cash:0,
+  selected:1,
+  owned:[1],
+  highScore:0,
+  isAdmin:false
+};
+
+
+function enforceAdmin(){
+
+  const email =
+    String(saveData.email || "")
+    .trim()
+    .toLowerCase();
+
+  saveData.isAdmin =
+    email === ADMIN_EMAIL.toLowerCase();
+
+  if(saveData.isAdmin){
+
+    saveData.cash = ADMIN_CASH;
+
+    saveData.owned =
+      cars.map(car => car.id);
+
+    if(!cars.some(car => car.id === saveData.selected)){
+      saveData.selected = 1;
+    }
+  }
+}
+
+
+function loadSave(){
+
+  try{
+
+    const raw =
+      localStorage.getItem(SAVE_KEY);
+
+    if(raw){
+
+      const loaded =
+        JSON.parse(raw);
+
+      if(loaded && typeof loaded === "object"){
+
+        saveData = {
+          name:loaded.name || "Guest",
+          email:loaded.email || "",
+          cash:Number(loaded.cash) || 0,
+          selected:Number(loaded.selected) || 1,
+          owned:Array.isArray(loaded.owned)
+            ? loaded.owned
+            : [1],
+          highScore:Number(loaded.highScore) || 0,
+          isAdmin:Boolean(loaded.isAdmin)
+        };
+
+      }
+
+    }
+
+  }catch(error){
+
+    console.log("Save load error:",error);
+
+  }
+
+  enforceAdmin();
+
+}
+
+
+function saveGame(){
+
+  enforceAdmin();
+
+  try{
+
+    localStorage.setItem(
+      SAVE_KEY,
+      JSON.stringify(saveData)
+    );
+
+  }catch(error){
+
+    console.log("Save error:",error);
+
+  }
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function finishLogin(provider,email){
+
+  const inputName =
+    document
+    .getElementById("nameInput")
+    .value
+    .trim();
+
+
+  saveData.email =
+    email || "";
+
+
+  if(provider === "Google"){
+
+    saveData.email =
+      ADMIN_EMAIL;
+
+    saveData.name =
+      "Aldrin Admin";
+
+  }else{
+
+    saveData.name =
+      inputName ||
+      (
+        email
+        ? email.split("@")[0]
+        : "Guest"
+      );
+
+  }
+
+
+  enforceAdmin();
+
+  cash =
+    Number(saveData.cash) || 0;
+
+  saveGame();
+
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("app")
+    .classList.remove("hidden");
+
+
+  renderAll();
+
+  showPanel("home");
+
+}
+
+
+function loginNormal(){
+
+  const email =
+    document
+    .getElementById("emailInput")
+    .value
+    .trim();
+
+
+  if(!email){
+
+    alert("Please enter your email.");
+
+    return;
+
+  }
+
+
+  finishLogin(
+    "Email",
+    email
+  );
+
+}
+
+
+function loginWithGoogle(){
+
+  finishLogin(
+    "Google",
+    ADMIN_EMAIL
+  );
+
+}
+
+
+function loginWithFacebook(){
+
+  finishLogin(
+    "Facebook",
+    ""
+  );
+
+}
+
+
+function guestLogin(){
+
+  finishLogin(
+    "Guest",
+    ""
+  );
+
+}
+
+
+function logout(){
+
+  gameRunning=false;
+
+  saveGame();
+
+  document
+    .getElementById("app")
+    .classList.add("hidden");
+
+  document
+    .getElementById("gameScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginScreen")
+    .classList.remove("hidden");
+
+}
+
+
+/* =====================================================
+   SCORE / SEASON
+===================================================== */
+
+function getSeasonFromScore(){
+
+  const index =
+    Math.floor(score / 500) % seasons.length;
+
+  return seasons[index];
+
+}
+
+
+function getSeason(){
+
+  return getSeasonFromScore();
+
+}
+
+
+function getStageFromScore(){
+
+  return Math.floor(score / 2500) + 1;
+
+}
+
+
+function getMultiplier(){
+
+  return getStageFromScore();
+
+}
+
+
+/* =====================================================
+   PANELS
+===================================================== */
+
+function showPanel(panel){
+
+  const names = [
+    "home",
+    "garage",
+    "leaderboard",
+    "profile",
+    "settings"
+  ];
+
+
+  names.forEach(name => {
+
+    const element =
+      document.getElementById(
+        name + "Panel"
+      );
+
+    if(element){
+
+      element.classList.toggle(
+        "hidden",
+        name !== panel
+      );
+
+    }
+
+  });
+
+
+  renderAll();
+
+}
+
+
+/* =====================================================
+   RENDER
+===================================================== */
+
+function renderAll(){
+
+  enforceAdmin();
+
+
+  document.getElementById(
+    "moneyTop"
+  ).textContent =
+    saveData.isAdmin
+      ? "∞"
+      : Math.floor(
+          saveData.cash
+        ).toLocaleString();
+
+
+  renderGarage();
+  renderLeaderboard();
+  renderProfile();
+
+}
+
+
+function renderGarage(){
+
+  const grid =
+    document.getElementById("carGrid");
+
+  if(!grid)return;
+
+
+  grid.innerHTML = "";
+
+
+  cars.forEach(car => {
+
+    const owned =
+      saveData.owned.includes(car.id);
+
+    const selected =
+      saveData.selected === car.id;
+
+
+    const card =
+      document.createElement("div");
+
+    card.className = "carCard";
+
+
+    card.innerHTML = `
+
+      <div class="carVisual">
+
+        <div
+          class="carEmoji"
+          style="text-shadow:0 0 18px ${car.tail}">
+          ${car.emoji}
+        </div>
+
+      </div>
+
+      <div class="carName">
+        ${car.id}. ${car.name}
+      </div>
+
+      <div class="stats">
+        <span>Speed</span>
+        <b>${car.speed.toFixed(2)}x</b>
+      </div>
+
+      <div class="stats">
+        <span>Handling</span>
+        <b>${car.handling.toFixed(2)}x</b>
+      </div>
+
+      <button
+        class="carBtn ${selected ? "selected" : ""}"
+        onclick="buyOrSelectCar(${car.id})">
+
+        ${
+          selected
+            ? "✓ SELECTED"
+            : owned
+              ? "SELECT"
+              : "BUY ₱" + car.price.toLocaleString()
+        }
+
+      </button>
+
+    `;
+
+
+    grid.appendChild(card);
+
+  });
+
+}
+
+
+function buyOrSelectCar(id){
+
+  const car =
+    cars.find(
+      c => c.id === id
+    );
+
+  if(!car)return;
+
+
+  if(saveData.owned.includes(id)){
+
+    saveData.selected = id;
+
+    saveGame();
+    renderAll();
+
+    return;
+
+  }
+
+
+  if(saveData.isAdmin){
+
+    saveData.owned.push(id);
+    saveData.selected = id;
+
+    saveGame();
+    renderAll();
+
+    return;
+
+  }
+
+
+  if(saveData.cash < car.price){
+
+    alert(
+      "Not enough cash. You need ₱" +
+      car.price.toLocaleString()
+    );
+
+    return;
+
+  }
+
+
+  saveData.cash -= car.price;
+
+  saveData.owned.push(id);
+
+  saveData.selected = id;
+
+  cash = saveData.cash;
+
+  saveGame();
+
+  renderAll();
+
+}
+
+
+/* =====================================================
+   LEADERBOARD
+===================================================== */
+
+function renderLeaderboard(){
+
+  const list =
+    document.getElementById(
+      "leaderboardList"
+    );
+
+  if(!list)return;
+
+
+  const players = [
+
+    {
+      name:
+        saveData.name || "Player",
+      score:
+        Math.floor(
+          saveData.highScore || 0
+        )
+    },
+
+    {
+      name:"Road Runner",
+      score:425000
+    },
+
+    {
+      name:"Speed Demon",
+      score:318500
+    },
+
+    {
+      name:"Highway King",
+      score:247000
+    },
+
+    {
+      name:"Night Racer",
+      score:185000
+    }
+
+  ];
+
+
+  players.sort(
+    (a,b) => b.score - a.score
+  );
+
+
+  list.innerHTML = "";
+
+
+  players.forEach(
+    (player,index) => {
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "leaderRow";
+
+      row.innerHTML = `
+
+        <span>
+          <span class="rank">
+            #${index + 1}
+          </span>
+          &nbsp;
+          ${player.name}
+        </span>
+
+        <b>
+          ${player.score.toLocaleString()}
+        </b>
+
+      `;
+
+      list.appendChild(row);
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+function renderProfile(){
+
+  const selected =
+    cars.find(
+      c => c.id === saveData.selected
+    ) || cars[0];
+
+
+  /*
+    Outside a race, use the
+    player's highest score as
+    the profile progression.
+  */
+  const profileScore =
+    Math.max(
+      0,
+      Number(saveData.highScore) || 0
+    );
+
+
+  const profileStage =
+    Math.floor(
+      profileScore / 2500
+    ) + 1;
+
+
+  const profileSeason =
+    seasons[
+      Math.floor(profileScore / 500) %
+      seasons.length
+    ];
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent =
+    saveData.name || "Guest";
+
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent =
+    saveData.isAdmin
+      ? ADMIN_EMAIL + " • ADMIN"
+      : saveData.email || "Guest";
+
+
+  document.getElementById(
+    "profileScore"
+  ).textContent =
+    profileScore.toLocaleString();
+
+
+  document.getElementById(
+    "profileStage"
+  ).textContent =
+    profileStage;
+
+
+  document.getElementById(
+    "profileCar"
+  ).textContent =
+    selected.name;
+
+
+  document.getElementById(
+    "homeStage"
+  ).textContent =
+    profileStage;
+
+
+  document.getElementById(
+    "homeSeason"
+  ).textContent =
+    profileSeason.name.toUpperCase();
+
+
+  document.getElementById(
+    "homeMulti"
+  ).textContent =
+    "×" + profileStage;
+
+}
+
+
+/* =====================================================
+   AUDIO
+===================================================== */
+
+let audioCtx = null;
+let soundEnabled = true;
+let volumeLevel = 0.8;
+
+
+function ensureAudio(){
+
+  if(!soundEnabled)return;
+
+
+  if(!audioCtx){
+
+    try{
+
+      audioCtx =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
+
+    }catch(error){
+
+      console.log("Audio unavailable");
+
+    }
+
+  }
+
+
+  if(
+    audioCtx &&
+    audioCtx.state === "suspended"
+  ){
+
+    audioCtx.resume().catch(() => {});
+
+  }
+
+}
+
+
+function beep(
+  frequency = 440,
+  duration = .1,
+  type = "sine"
+){
+
+  if(!soundEnabled)return;
+
+  ensureAudio();
+
+  if(!audioCtx)return;
+
+
+  try{
+
+    const oscillator =
+      audioCtx.createOscillator();
+
+    const gain =
+      audioCtx.createGain();
+
+
+    oscillator.type = type;
+
+    oscillator.frequency.value =
+      frequency;
+
+
+    gain.gain.value =
+      Math.max(
+        .001,
+        volumeLevel * .08
+      );
+
+
+    oscillator.connect(gain);
+
+    gain.connect(
+      audioCtx.destination
+    );
+
+
+    oscillator.start();
+
+
+    gain.gain.exponentialRampToValueAtTime(
+      .001,
+      audioCtx.currentTime + duration
+    );
+
+
+    oscillator.stop(
+      audioCtx.currentTime + duration
+    );
+
+  }catch(error){
+
+    console.log("Beep error:",error);
+
+  }
+
+}
+
+
+function toggleSound(){
+
+  soundEnabled =
+    !soundEnabled;
+
+
+  document.getElementById(
+    "soundButton"
+  ).textContent =
+    soundEnabled
+      ? "ON"
+      : "OFF";
+
+
+  if(soundEnabled){
+
+    ensureAudio();
+
+  }
+
+}
+
+
+function changeVolume(){
+
+  if(volumeLevel >= .8){
+
+    volumeLevel = .35;
+
+    document.getElementById(
+      "volumeButton"
+    ).textContent = "LOW";
+
+  }else{
+
+    volumeLevel = .8;
+
+    document.getElementById(
+      "volumeButton"
+    ).textContent = "HIGH";
+
+  }
+
+}
+
+
+/* =====================================================
+   GAME VARIABLES
+===================================================== */
+
+const canvas =
+  document.getElementById(
+    "gameCanvas"
+  );
+
+const ctx =
+  canvas.getContext("2d");
+
+
+let W = 0;
+let H = 0;
+
+let gameRunning = false;
+let crashed = false;
+
+let lastTime = 0;
+
+let stage = 1;
+let score = 0;
+
+let cash = 0;
+
+let roadOffset = 0;
+
+let traffic = [];
+let particles = [];
+
+let bannerTimer = null;
+
+
+let player = {
+
+  x:0,
+  targetX:0,
+  y:0,
+
+  width:58,
+  height:100,
+
+  tilt:0
+
+};
+
+
+/* =====================================================
+   ROAD
+===================================================== */
+
+function roadGeometry(){
+
+  const roadWidth =
+    Math.min(
+      W * .78,
+      520
+    );
+
+
+  const left =
+    (W - roadWidth) / 2;
+
+
+  return {
+
+    width:roadWidth,
+
+    left:left,
+
+    right:
+      left + roadWidth,
+
+    laneWidth:
+      roadWidth / 3
+
+  };
+
+}
+
+
+/* =====================================================
+   RESIZE
+===================================================== */
+
+function resizeGame(){
+
+  W =
+    Math.max(
+      320,
+      window.innerWidth
+    );
+
+
+  H =
+    Math.max(
+      480,
+      window.innerHeight
+    );
+
+
+  const ratio =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
+
+
+  canvas.width =
+    Math.floor(W * ratio);
+
+  canvas.height =
+    Math.floor(H * ratio);
+
+
+  canvas.style.width =
+    W + "px";
+
+  canvas.style.height =
+    H + "px";
+
+
+  ctx.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
+
+
+  const road =
+    roadGeometry();
+
+
+  if(!gameRunning){
+
+    player.x =
+      road.left +
+      road.laneWidth * 1.5;
+
+    player.targetX =
+      player.x;
+
+  }
+
+
+  player.y =
+    H - 145;
+
+}
+
+
+window.addEventListener(
+  "resize",
+  resizeGame
+);
+
+
+/* =====================================================
+   TRAFFIC
+===================================================== */
+
+function randomTrafficColor(){
+
+  const colors = [
+
+    "#e23a3a",
+    "#287dd8",
+    "#f0b92e",
+    "#eeeeee",
+    "#202328",
+    "#31a85a",
+    "#c65be8",
+    "#e87525"
+
+  ];
+
+
+  return colors[
+    Math.floor(
+      Math.random() * colors.length
+    )
+  ];
+
+}
+
+
+function spawnTraffic(y = -300){
+
+  const road =
+    roadGeometry();
+
+
+  const available = [];
+
+
+  for(
+    let lane = 0;
+    lane < 3;
+    lane++
+  ){
+
+    const occupied =
+      traffic.some(
+        car =>
+          car.lane === lane &&
+          car.y < 180
+      );
+
+
+    if(!occupied){
+
+      available.push(lane);
+
+    }
+
+  }
+
+
+  let lane;
+
+
+  if(available.length){
+
+    lane =
+      available[
+        Math.floor(
+          Math.random() *
+          available.length
+        )
+      ];
+
+  }else{
+
+    lane =
+      Math.floor(
+        Math.random() * 3
+      );
+
+  }
+
+
+  traffic.push({
+
+    lane:lane,
+
+    x:
+      road.left +
+      road.laneWidth *
+      (lane + .5),
+
+    y:y,
+
+    width:
+      Math.random() < .15
+        ? 62
+        : 52,
+
+    height:
+      Math.random() < .15
+        ? 105
+        : 88,
+
+    speed:
+      100 +
+      Math.random() * 80 +
+      Math.min(
+        stage * 3,
+        100
+      ),
+
+    color:
+      randomTrafficColor(),
+
+    type:
+      Math.random() < .15
+        ? "truck"
+        : "car"
+
+  });
+
+}
+
+
+/* =====================================================
+   MOVEMENT
+===================================================== */
+
+function movePlayer(direction){
+
+  if(!gameRunning || crashed)return;
+
+
+  const road =
+    roadGeometry();
+
+
+  const laneWidth =
+    road.laneWidth;
+
+
+  let lane =
+    Math.round(
+      (
+        player.targetX -
+        road.left -
+        laneWidth / 2
+      ) / laneWidth
+    );
+
+
+  lane += direction;
+
+
+  lane =
+    Math.max(
+      0,
+      Math.min(
+        2,
+        lane
+      )
+    );
+
+
+  player.targetX =
+    road.left +
+    laneWidth *
+    (lane + .5);
+
+
+  beep(
+    direction < 0
+      ? 260
+      : 340,
+    .05,
+    "square"
+  );
+
+}
+
+
+document.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight"
+    ){
+
+      event.preventDefault();
+
+      movePlayer(
+        event.key === "ArrowLeft"
+          ? -1
+          : 1
+      );
+
+    }
+
+  }
+);
+
+
+function bindButton(
+  id,
+  direction
+){
+
+  const button =
+    document.getElementById(id);
+
+
+  if(!button)return;
+
+
+  button.addEventListener(
+    "pointerdown",
+    event => {
+
+      event.preventDefault();
+
+      movePlayer(direction);
+
+    },
+    {passive:false}
+  );
+
+}
+
+
+bindButton("leftBtn",-1);
+bindButton("rightBtn",1);
+
+
+/* =====================================================
+   COLLISION
+===================================================== */
+
+function checkCollision(a,b){
+
+  return (
+
+    a.x - a.width / 2 <
+    b.x + b.width / 2 &&
+
+    a.x + a.width / 2 >
+    b.x - b.width / 2 &&
+
+    a.y - a.height / 2 <
+    b.y + b.height / 2 &&
+
+    a.y + a.height / 2 >
+    b.y - b.height / 2
+
+  );
+
+}
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+function createCrashParticles(){
+
+  for(
+    let i = 0;
+    i < 65;
+    i++
+  ){
+
+    particles.push({
+
+      x:player.x,
+      y:player.y,
+
+      vx:
+        (Math.random() - .5) *
+        650,
+
+      vy:
+        (Math.random() - .7) *
+        650,
+
+      life:
+        .5 +
+        Math.random() * .9,
+
+      size:
+        3 +
+        Math.random() * 7,
+
+      color:
+        Math.random() < .5
+          ? "#ff3b20"
+          : "#ffd33d"
+
+    });
+
+  }
+
+}
+
+
+function updateParticles(dt){
+
+  for(
+    let i = particles.length - 1;
+    i >= 0;
+    i--
+  ){
+
+    const p =
+      particles[i];
+
+
+    p.x +=
+      p.vx * dt;
+
+    p.y +=
+      p.vy * dt;
+
+    p.vy +=
+      700 * dt;
+
+    p.life -= dt;
+
+
+    if(p.life <= 0){
+
+      particles.splice(i,1);
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   START GAME
+===================================================== */
+
+function startGame(){
+
+  ensureAudio();
+
+  resizeGame();
+
+
+  document
+    .getElementById("app")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("gameScreen")
+    .classList.remove("hidden");
+
+
+  document.getElementById(
+    "crashScreen"
+  ).style.display = "none";
+
+
+  if(bannerTimer){
+
+    clearTimeout(bannerTimer);
+
+    bannerTimer = null;
+
+  }
+
+
+  score = 0;
+  stage = 1;
+
+  roadOffset = 0;
+
+  traffic = [];
+  particles = [];
+
+
+  const road =
+    roadGeometry();
+
+
+  player.x =
+    road.left +
+    road.laneWidth * 1.5;
+
+
+  player.targetX =
+    player.x;
+
+
+  player.y =
+    H - 145;
+
+
+  player.tilt = 0;
+
+
+  crashed = false;
+  gameRunning = true;
+
+
+  for(
+    let i = 0;
+    i < 6;
+    i++
+  ){
+
+    spawnTraffic(
+      -300 -
+      i * 260
+    );
+
+  }
+
+
+  updateHUD();
+
+  showSeasonBanner();
+
+
+  lastTime =
+    performance.now();
+
+
+  requestAnimationFrame(
+    gameLoop
+  );
+
+}
+
+
+/* =====================================================
+   RESTART
+===================================================== */
+
+function restartGame(){
+
+  document.getElementById(
+    "crashScreen"
+  ).style.display = "none";
+
+
+  startGame();
+
+}
+
+
+/* =====================================================
+   EXIT
+===================================================== */
+
+function exitGame(){
+
+  gameRunning = false;
+
+  crashed = false;
+
+
+  if(bannerTimer){
+
+    clearTimeout(bannerTimer);
+
+    bannerTimer = null;
+
+  }
+
+
+  document
+    .getElementById("gameScreen")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("app")
+    .classList.remove("hidden");
+
+
+  saveGame();
+
+  renderAll();
+
+  showPanel("home");
+
+}
+
+
+/* =====================================================
+   CRASH
+===================================================== */
+
+function crashGame(){
+
+  if(crashed)return;
+
+
+  crashed = true;
+  gameRunning = false;
+
+
+  createCrashParticles();
+
+
+  beep(
+    90,
+    .4,
+    "sawtooth"
+  );
+
+
+  if(
+    score >
+    saveData.highScore
+  ){
+
+    saveData.highScore =
+      Math.floor(score);
+
+  }
+
+
+  saveGame();
+
+
+  document.getElementById(
+    "crashScore"
+  ).textContent =
+    Math.floor(score)
+    .toLocaleString();
+
+
+  document.getElementById(
+    "crashStage"
+  ).textContent =
+    getStageFromScore();
+
+
+  document.getElementById(
+    "crashScreen"
+  ).style.display =
+    "flex";
+
+
+  drawGame();
+
+}
+
+
+/* =====================================================
+   SEASON BANNER
+===================================================== */
+
+function showSeasonBanner(){
+
+  const season =
+    getSeason();
+
+
+  const stageNow =
+    getStageFromScore();
+
+
+  const multiplier =
+    getMultiplier();
+
+
+  document.getElementById(
+    "bannerSeason"
+  ).textContent =
+    season.name.toUpperCase();
+
+
+  document.getElementById(
+    "bannerCycle"
+  ).textContent =
+    "Stage " +
+    stageNow +
+    " • ×" +
+    multiplier;
+
+
+  const banner =
+    document.getElementById(
+      "seasonBanner"
+    );
+
+
+  banner.classList.add("show");
+
+
+  if(bannerTimer){
+
+    clearTimeout(bannerTimer);
+
+  }
+
+
+  bannerTimer =
+    setTimeout(
+      () => {
+
+        banner.classList.remove("show");
+
+        bannerTimer = null;
+
+      },
+      1500
+    );
+
+}
+
+
+/* =====================================================
+   UPDATE GAME
+===================================================== */
+
+function updateGame(dt){
+
+  if(!gameRunning)return;
+
+
+  const selected =
+    cars.find(
+      c => c.id === saveData.selected
+    ) || cars[0];
+
+
+  const oldStage =
+    getStageFromScore();
+
+
+  const oldSeason =
+    getSeason().name;
+
+
+  stage =
+    oldStage;
+
+
+  const baseSpeed =
+    250 +
+    Math.min(
+      stage * 5,
+      260
+    );
+
+
+  const playerSpeed =
+    baseSpeed *
+    selected.speed;
+
+
+  /*
+    SCORE IS BASED ON SPEED
+  */
+  score +=
+    playerSpeed *
+    .16 *
+    dt;
+
+
+  /*
+    CHECK NEW STAGE/SEASON
+  */
+  const newStage =
+    getStageFromScore();
+
+
+  const newSeason =
+    getSeason().name;
+
+
+  if(
+    newStage !== oldStage ||
+    newSeason !== oldSeason
+  ){
+
+    stage = newStage;
+
+    beep(
+      620,
+      .15,
+      "triangle"
+    );
+
+    showSeasonBanner();
+
+  }
+
+
+  stage = newStage;
+
+
+  /*
+    ROAD
+  */
+  roadOffset +=
+    playerSpeed * dt;
+
+
+  /*
+    CASH
+  */
+  if(saveData.isAdmin){
+
+    saveData.cash =
+      ADMIN_CASH;
+
+  }else{
+
+    cash +=
+      playerSpeed *
+      .002 *
+      getMultiplier() *
+      dt;
+
+    saveData.cash =
+      cash;
+
+  }
+
+
+  /*
+    PLAYER
+  */
+  player.x +=
+    (
+      player.targetX -
+      player.x
+    ) *
+    Math.min(
+      dt *
+      9 *
+      selected.handling,
+      1
+    );
+
+
+  player.tilt =
+    (
+      player.targetX -
+      player.x
+    ) * .008;
+
+
+  /*
+    TRAFFIC
+  */
+  for(
+    let i = traffic.length - 1;
+    i >= 0;
+    i--
+  ){
+
+    const car =
+      traffic[i];
+
+
+    const relativeSpeed =
+      Math.max(
+        70,
+        playerSpeed -
+        car.speed +
+        80
+      );
+
+
+    car.y +=
+      relativeSpeed * dt;
+
+
+    /*
+      PASSED
+    */
+    if(car.y > H + 150){
+
+      traffic.splice(i,1);
+
+
+      spawnTraffic(
+        -350 -
+        Math.random() * 500
+      );
+
+
+      score += 15;
+
+
+      continue;
+
+    }
+
+
+    /*
+      COLLISION
+    */
+    const playerBox = {
+
+      x:player.x,
+      y:player.y,
+
+      width:
+        player.width * .70,
+
+      height:
+        player.height * .74
+
+    };
+
+
+    const trafficBox = {
+
+      x:car.x,
+      y:car.y,
+
+      width:
+        car.width * .70,
+
+      height:
+        car.height * .75
+
+    };
+
+
+    if(
+      checkCollision(
+        playerBox,
+        trafficBox
+      )
+    ){
+
+      crashGame();
+
+      return;
+
+    }
+
+  }
+
+
+  /*
+    TRAFFIC AMOUNT
+  */
+  const desiredTraffic =
+    Math.min(
+      4 +
+      Math.floor(stage / 4),
+      9
+    );
+
+
+  while(
+    traffic.length <
+    desiredTraffic
+  ){
+
+    spawnTraffic(
+      -300 -
+      Math.random() * 500
+    );
+
+  }
+
+
+  updateParticles(dt);
+
+  updateHUD();
+
+
+  /*
+    Save progress periodically.
+  */
+  if(
+    Math.floor(score) % 100 === 0
+  ){
+
+    if(
+      score >
+      saveData.highScore
+    ){
+
+      saveData.highScore =
+        Math.floor(score);
+
+    }
+
+    saveGame();
+
+  }
+
+}
+
+
+/* =====================================================
+   HUD
+===================================================== */
+
+function updateHUD(){
+
+  const selected =
+    cars.find(
+      c => c.id === saveData.selected
+    ) || cars[0];
+
+
+  const currentStage =
+    getStageFromScore();
+
+
+  const baseSpeed =
+    250 +
+    Math.min(
+      currentStage * 5,
+      260
+    );
+
+
+  const currentSpeed =
+    baseSpeed *
+    selected.speed;
+
+
+  const season =
+    getSeason();
+
+
+  const multiplier =
+    getMultiplier();
+
+
+  document.getElementById(
+    "stageHUD"
+  ).textContent =
+    currentStage;
+
+
+  document.getElementById(
+    "seasonHUD"
+  ).textContent =
+    season.name.toUpperCase();
+
+
+  document.getElementById(
+    "multiHUD"
+  ).textContent =
+    "×" + multiplier;
+
+
+  document.getElementById(
+    "scoreHUD"
+  ).textContent =
+    Math.floor(score)
+    .toLocaleString();
+
+
+  document.getElementById(
+    "speedHUD"
+  ).textContent =
+    Math.round(currentSpeed);
+
+}
+
+
+/* =====================================================
+   DRAW GAME
+===================================================== */
+
+function drawGame(){
+
+  const season =
+    getSeason();
+
+
+  ctx.clearRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+
+  /*
+    SKY
+  */
+  ctx.fillStyle =
+    season.sky;
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+
+  /*
+    GROUND
+  */
+  ctx.fillStyle =
+    season.ground;
+
+  ctx.fillRect(
+    0,
+    H * .23,
+    W,
+    H
+  );
+
+
+  /*
+    STRAIGHT ROAD
+  */
+  const road =
+    roadGeometry();
+
+
+  ctx.fillStyle =
+    season.road;
+
+  ctx.fillRect(
+    road.left,
+    0,
+    road.width,
+    H
+  );
+
+
+  /*
+    ROAD EDGES
+  */
+  ctx.fillStyle =
+    season.line;
+
+
+  ctx.fillRect(
+    road.left,
+    0,
+    5,
+    H
+  );
+
+
+  ctx.fillRect(
+    road.right - 5,
+    0,
+    5,
+    H
+  );
+
+
+  /*
+    LANE LINES
+  */
+  const dashHeight = 75;
+  const gap = 50;
+
+
+  const offset =
+    roadOffset %
+    (dashHeight + gap);
+
+
+  ctx.fillStyle =
+    season.line;
+
+
+  for(
+    let lane = 1;
+    lane < 3;
+    lane++
+  ){
+
+    const x =
+      road.left +
+      road.laneWidth * lane;
+
+
+    for(
+      let y =
+        -dashHeight + offset;
+
+      y < H;
+
+      y +=
+        dashHeight + gap
+    ){
+
+      ctx.fillRect(
+        x - 2,
+        y,
+        4,
+        dashHeight
+      );
+
+    }
+
+  }
+
+
+  drawSeasonEffects(season);
+
+
+  traffic.forEach(
+    drawTrafficCar
+  );
+
+
+  drawPlayer();
+
+
+  particles.forEach(p => {
+
+    ctx.globalAlpha =
+      Math.max(
+        0,
+        p.life
+      );
+
+
+    ctx.fillStyle =
+      p.color;
+
+
+    ctx.fillRect(
+      p.x - p.size / 2,
+      p.y - p.size / 2,
+      p.size,
+      p.size
+    );
+
+  });
+
+
+  ctx.globalAlpha = 1;
+
+}
+
+
+/* =====================================================
+   TRAFFIC DRAW
+===================================================== */
+
+function drawTrafficCar(car){
+
+  ctx.save();
+
+
+  ctx.translate(
+    car.x,
+    car.y
+  );
+
+
+  const w =
+    car.width;
+
+  const h =
+    car.height;
+
+
+  /*
+    WHEELS
+  */
+  ctx.fillStyle =
+    "#050505";
+
+
+  ctx.fillRect(
+    -w * .56,
+    -h * .38,
+    w * .15,
+    h * .30
+  );
+
+
+  ctx.fillRect(
+    w * .41,
+    -h * .38,
+    w * .15,
+    h * .30
+  );
+
+
+  ctx.fillRect(
+    -w * .56,
+    h * .10,
+    w * .15,
+    h * .30
+  );
+
+
+  ctx.fillRect(
+    w * .41,
+    h * .10,
+    w * .15,
+    h * .30
+  );
+
+
+  /*
+    BODY
+  */
+  ctx.fillStyle =
+    car.color;
+
+
+  roundRect(
+    ctx,
+    -w / 2,
+    -h / 2,
+    w,
+    h,
+    10
+  );
+
+
+  ctx.fill();
+
+
+  /*
+    WINDOWS
+  */
+  ctx.fillStyle =
+    "#b8e7ff";
+
+
+  roundRect(
+    ctx,
+    -w * .30,
+    -h * .28,
+    w * .60,
+    h * .23,
+    5
+  );
+
+
+  ctx.fill();
+
+
+  ctx.fillStyle =
+    "#111";
+
+
+  roundRect(
+    ctx,
+    -w * .30,
+    h * .05,
+    w * .60,
+    h * .22,
+    5
+  );
+
+
+  ctx.fill();
+
+
+  /*
+    LIGHTS
+  */
+  ctx.fillStyle =
+    "#ff2222";
+
+
+  ctx.fillRect(
+    -w * .30,
+    h * .36,
+    10,
+    5
+  );
+
+
+  ctx.fillRect(
+    w * .12,
+    h * .36,
+    10,
+    5
+  );
+
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   PLAYER DRAW
+===================================================== */
+
+function drawPlayer(){
+
+  const selected =
+    cars.find(
+      c => c.id === saveData.selected
+    ) || cars[0];
+
+
+  ctx.save();
+
+
+  ctx.translate(
+    player.x,
+    player.y
+  );
+
+
+  ctx.rotate(
+    player.tilt
+  );
+
+
+  /*
+    EXHAUST
+  */
+  const tailStrength =
+    selected.speed >= 1.30
+      ? 1.7
+      : 1;
+
+
+  for(
+    let i = 0;
+    i < 4;
+    i++
+  ){
+
+    const length =
+      15 +
+      Math.random() *
+      35 *
+      tailStrength;
+
+
+    ctx.globalAlpha =
+      .25 +
+      Math.random() * .35;
+
+
+    ctx.fillStyle =
+      selected.tail;
+
+
+    ctx.fillRect(
+      -13,
+      player.height / 2 + i * 5,
+      7,
+      length
+    );
+
+
+    ctx.fillRect(
+      6,
+      player.height / 2 + i * 5,
+      7,
+      length
+    );
+
+  }
+
+
+  ctx.globalAlpha = 1;
+
+
+  /*
+    SHADOW
+  */
+  ctx.fillStyle =
+    "rgba(0,0,0,.45)";
+
+
+  ctx.beginPath();
+
+
+  ctx.ellipse(
+    0,
+    player.height / 2 + 5,
+    42,
+    13,
+    0,
+    0,
+    Math.PI * 2
+  );
+
+
+  ctx.fill();
+
+
+  /*
+    WHEELS
+  */
+  ctx.fillStyle =
+    "#050505";
+
+
+  ctx.fillRect(
+    -35,
+    -34,
+    11,
+    28
+  );
+
+
+  ctx.fillRect(
+    24,
+    -34,
+    11,
+    28
+  );
+
+
+  ctx.fillRect(
+    -35,
+    10,
+    11,
+    28
+  );
+
+
+  ctx.fillRect(
+    24,
+    10,
+    11,
+    28
+  );
+
+
+  /*
+    BODY
+  */
+  ctx.fillStyle =
+    selected.color;
+
+
+  roundRect(
+    ctx,
+    -29,
+    -50,
+    58,
+    100,
+    12
+  );
+
+
+  ctx.fill();
+
+
+  /*
+    BODY HIGHLIGHT
+  */
+  ctx.fillStyle =
+    "rgba(255,255,255,.18)";
+
+
+  roundRect(
+    ctx,
+    -23,
+    -43,
+    46,
+    25,
+    8
+  );
+
+
+  ctx.fill();
+
+
+  /*
+    WINDOWS
+  */
+  ctx.fillStyle =
+    "#09141d";
+
+
+  roundRect(
+    ctx,
+    -20,
+    -28,
+    40,
+    25,
+    7
+  );
+
+
+  ctx.fill();
+
+
+  /*
+    CENTER LINE
+  */
+  ctx.fillStyle =
+    "rgba(255,255,255,.15)";
+
+
+  ctx.fillRect(
+    -2,
+    -48,
+    4,
+    94
+  );
+
+
+  /*
+    HEADLIGHTS
+  */
+  ctx.fillStyle =
+    "#fff4b0";
+
+
+  ctx.fillRect(
+    -22,
+    -47,
+    12,
+    6
+  );
+
+
+  ctx.fillRect(
+    10,
+    -47,
+    12,
+    6
+  );
+
+
+  /*
+    TAIL LIGHTS
+  */
+  ctx.fillStyle =
+    "#ff2020";
+
+
+  ctx.fillRect(
+    -22,
+    41,
+    12,
+    6
+  );
+
+
+  ctx.fillRect(
+    10,
+    41,
+    12,
+    6
+  );
+
+
+  ctx.restore();
+
+}
+
+
+/* =====================================================
+   SEASON EFFECTS
+===================================================== */
+
+function drawSeasonEffects(season){
+
+  const index =
+    seasons.indexOf(season);
+
+
+  /*
+    SPRING
+  */
+  if(index === 0){
+
+    ctx.globalAlpha = .25;
+
+
+    for(
+      let i = 0;
+      i < 15;
+      i++
+    ){
+
+      const x =
+        (
+          i * 137 +
+          roadOffset * .12
+        ) % W;
+
+
+      const y =
+        (
+          i * 83 +
+          roadOffset * .04
+        ) % H;
+
+
+      ctx.fillStyle =
+        "#ffe7f3";
+
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+        x,
+        y,
+        3,
+        0,
+        Math.PI * 2
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.globalAlpha = 1;
+
+  }
+
+
+  /*
+    SUMMER
+  */
+  if(index === 1){
+
+    ctx.globalAlpha = .18;
+
+    ctx.fillStyle = "#fff";
+
+
+    for(
+      let i = 0;
+      i < 8;
+      i++
+    ){
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+        20 + i * 110,
+        70 + (i % 2) * 80,
+        25,
+        0,
+        Math.PI * 2
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.globalAlpha = 1;
+
+  }
+
+
+  /*
+    AUTUMN
+  */
+  if(index === 2){
+
+    ctx.globalAlpha = .7;
+
+
+    for(
+      let i = 0;
+      i < 14;
+      i++
+    ){
+
+      const x =
+        (
+          i * 91 +
+          roadOffset * .25
+        ) % W;
+
+
+      const y =
+        (
+          i * 121 +
+          roadOffset * .12
+        ) % H;
+
+
+      ctx.fillStyle =
+        i % 2
+          ? "#e88c32"
+          : "#b84a2d";
+
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+        x,
+        y,
+        4,
+        0,
+        Math.PI * 2
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.globalAlpha = 1;
+
+  }
+
+
+  /*
+    RAIN
+  */
+  if(index === 3){
+
+    ctx.strokeStyle =
+      "rgba(180,220,255,.35)";
+
+
+    ctx.lineWidth = 1;
+
+
+    for(
+      let i = 0;
+      i < 80;
+      i++
+    ){
+
+      const x =
+        (
+          i * 79 +
+          roadOffset * .8
+        ) % W;
+
+
+      const y =
+        (
+          i * 101 +
+          roadOffset * 1.5
+        ) % H;
+
+
+      ctx.beginPath();
+
+
+      ctx.moveTo(
+        x,
+        y
+      );
+
+
+      ctx.lineTo(
+        x - 5,
+        y + 25
+      );
+
+
+      ctx.stroke();
+
+    }
+
+  }
+
+
+  /*
+    WINTER
+  */
+  if(index === 4){
+
+    ctx.globalAlpha = .75;
+
+    ctx.fillStyle = "#fff";
+
+
+    for(
+      let i = 0;
+      i < 35;
+      i++
+    ){
+
+      const x =
+        (
+          i * 61 +
+          Math.sin(
+            roadOffset * .001 + i
+          ) * 30
+        ) % W;
+
+
+      const y =
+        (
+          i * 113 +
+          roadOffset * .18
+        ) % H;
+
+
+      ctx.beginPath();
+
+
+      ctx.arc(
+        x,
+        y,
+        3,
+        0,
+        Math.PI * 2
+      );
+
+
+      ctx.fill();
+
+    }
+
+
+    ctx.globalAlpha = 1;
+
+  }
+
+}
+
+
+/* =====================================================
+   ROUND RECT
+===================================================== */
+
+function roundRect(
+  context,
+  x,
+  y,
+  w,
+  h,
+  r
+){
+
+  r =
+    Math.min(
+      r,
+      w / 2,
+      h / 2
+    );
+
+
+  context.beginPath();
+
+
+  context.moveTo(
+    x + r,
+    y
+  );
+
+
+  context.arcTo(
+    x + w,
+    y,
+    x + w,
+    y + h,
+    r
+  );
+
+
+  context.arcTo(
+    x + w,
+    y + h,
+    x,
+    y + h,
+    r
+  );
+
+
+  context.arcTo(
+    x,
+    y + h,
+    x,
+    y,
+    r
+  );
+
+
+  context.arcTo(
+    x,
+    y,
+    x + w,
+    y,
+    r
+  );
+
+
+  context.closePath();
+
+}
+
+
+/* =====================================================
+   GAME LOOP
+===================================================== */
+
+function gameLoop(time){
+
+  if(!gameRunning){
+
+    drawGame();
+
+    return;
+
+  }
+
+
+  const dt =
+    Math.min(
+      Math.max(
+        (time - lastTime) / 1000,
+        0
+      ),
+      .033
+    );
+
+
+  lastTime = time;
+
+
+  updateGame(dt);
+
+  drawGame();
+
+
+  if(gameRunning){
+
+    requestAnimationFrame(
+      gameLoop
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   STARTUP
+===================================================== */
+
+loadSave();
+
+cash =
+  Number(saveData.cash) || 0;
+
+resizeGame();
+
+renderAll();
+
+</script>
+
+</body>
+</html>
